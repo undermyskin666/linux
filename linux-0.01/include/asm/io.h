@@ -1,6 +1,10 @@
 #define outb(value,port) \
 __asm__ ("outb %%al,%%dx"::"a" (value),"d" (port))
-
+/*
+* movl $value, %eax
+* movl $port,  %edx
+* outb %al,    %dx
+*/
 
 #define inb(port) ({ \
 unsigned char _v; \
