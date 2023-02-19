@@ -111,6 +111,25 @@ void main(void)		/* This really IS void, no error here. */
 	// write one byte (a | 0x80) to 0x61 port;
 	// write one byte (a) to 0x61 port.
 	tty_init();
+
+	// idt[0]  type=15, dpl=0, addr=divide_error
+	// idt[1]  type=15, dpl=0, addr=debug
+	// idt[2]  type=15, dpl=0, addr=nmi
+	// idt[3]  type=15, dpl=3, addr=int3
+	// idt[4]  type=15, dpl=3, addr=overflow
+	// idt[5]  type=15, dpl=3, addr=bounds
+	// idt[6]  type=15, dpl=0, addr=invalid_op
+	// idt[7]  type=15, dpl=0, addr=device_not_available
+	// idt[8]  type=15, dpl=0, addr=double_fault
+	// idt[9]  type=15, dpl=0, addr=coprocessor_segment_overrun
+	// idt[10] type=15, dpl=0, addr=invalid_TSS
+	// idt[11] type=15, dpl=0, addr=setment_not_present
+	// idt[12] type=15, dpl=0, addr=stack_setment
+	// idt[13] type=15, dpl=0, addr=general_protection
+	// idt[14] type=15, dpl=0, addr=page_fault
+	// idt[15] type=15, dpl=0, addr=reserved
+	// idt[16] type=15, dpl=0, addr=coprocessor_error
+	// idt[17..17+32) type=15, dpl=0, add=reserved
 	trap_init();
 	sched_init();
 	buffer_init();
