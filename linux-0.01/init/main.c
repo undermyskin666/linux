@@ -83,6 +83,33 @@ void main(void)		/* This really IS void, no error here. */
  * enable them
  */
 	time_init();
+
+	// idt[0x24] type=14, dpl=0, addr=rs1_interrupt
+	// idt[0x23] type=14, dpl=0, addr=rs2_interrupt
+	// tty_table[1].read_q.data == 0x3f8
+	// outb_p(0x80,0x3f8+3);	/* set DLAB of line control reg */
+	// outb_p(0x30,0x3f8);	/* LS of divisor (48 -> 2400 bps */
+	// outb_p(0x00,0x3f8+1);	/* MS of divisor */
+	// outb_p(0x03,0x3f8+3);	/* reset DLAB */
+	// outb_p(0x0b,0x3f8+4);	/* set DTR,RTS, OUT_2 */
+	// outb_p(0x0d,0x3f8+1);	/* enable all intrs but writes */
+	// (void)inb(0x3f8);	/* read data port to reset things (?) */
+	// tty_table[2].read_q.data == 0x2f8
+	// outb_p(0x80,0x2f8+3);	/* set DLAB of line control reg */
+	// outb_p(0x30,0x2f8);	/* LS of divisor (48 -> 2400 bps */
+	// outb_p(0x00,0x2f8+1);	/* MS of divisor */
+	// outb_p(0x03,0x2f8+3);	/* reset DLAB */
+	// outb_p(0x0b,0x2f8+4);	/* set DTR,RTS, OUT_2 */
+	// outb_p(0x0d,0x2f8+1);	/* enable all intrs but writes */
+	// (void)inb(0x2f8);	/* read data port to reset things (?) */
+	// read one byte from 0x21 port to variable x
+	// then write (x & 0xE7) to 0x21 port
+	// gotoxy(*(unsigned char *)(0x90000+510),*(unsigned char *)(0x90000+511));
+	// idt[0x21] type=15, dpl=0, addr=keyboard_interrupt
+	// get one byte from 0x21 port, ((one byte) & 0xfd), the write back to 0x21 port.
+	// get one byte from 0x61 port, assign it to a;
+	// write one byte (a | 0x80) to 0x61 port;
+	// write one byte (a) to 0x61 port.
 	tty_init();
 	trap_init();
 	sched_init();
